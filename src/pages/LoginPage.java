@@ -1,42 +1,73 @@
 package pages;
 
-import org.openqa.selenium.By;
+
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.asserts.SoftAssert;
+
+import com.relevantcodes.extentreports.ExtentTest;
+import com.relevantcodes.extentreports.LogStatus;
 
 import test.BaseClass;
 
 public class LoginPage {
 	WebDriver driver = BaseClass.driver;
+	ExtentTest test = BaseClass.test;
+	
+	//=============web elements========================
+	
+	
+	@FindBy(linkText="Log in")
+	WebElement LoginLink;
+	//WebElement LoginLink = driver.findElement(By.linkText("Log in"));
+	
+	@FindBy(name="user_login")
+	WebElement UserName;
+	//WebElement UserName = driver.findElement(By.name("user_login"));
+	
+	@FindBy(id="password")
+	WebElement Password;
+	
+	@FindBy(className="rememberMe")
+	WebElement RememberMe;
+	
+	@FindBy(name="btn_login")
+	WebElement LoginButton;
+	
+	@FindBy(id="msg_box")
+	WebElement Error;
+	
+	public LoginPage() {
+		PageFactory.initElements(driver, this);
+	}
+	
+	
+	
+	//==============methods===================
+	
 	
 	public void Login(String UName,String Pwd) {
-	    
-		WebElement LoginLink = driver.findElement(By.linkText("Log in"));
- 
+		
 		WebDriverWait wait=new  WebDriverWait(driver,30);
- 
 		wait.until(ExpectedConditions.visibilityOf(LoginLink));
   
-		LoginLink.click();
-
-		WebElement UserName = driver.findElement(By.name("user_login"));
+		LoginLink.click();	
+		test.log(LogStatus.PASS, "Click on Login Link", "Successfully Clicked the link");
 		UserName.sendKeys(UName);
-
-		WebElement Password = driver.findElement(By.id("password"));
+		test.log(LogStatus.PASS, "Enter Username "  +UName, "Successfully Entered the Name");
 		Password.sendKeys(Pwd);
-		
-		WebElement RememberMe = driver.findElement(By.className("rememberMe"));
+		test.log(LogStatus.PASS, "Enter Password "  +Pwd, "Successfully Entered the Password");
         RememberMe.click();
-
-		WebElement LoginButton = driver.findElement(By.name("btn_login"));
-		LoginButton.click();
+        LoginButton.click();
+        test.log(LogStatus.PASS, "Click Login Button", "Successfully clicked the button");
 	}
 
 		public void ErrorCheck() {
-		WebElement Error=driver.findElement(By.id("msg_box"));
+		
 	       String ActualMsg =Error.getText();
 	       String ExpMsg ="The email or password you have entered is invalid.";
 	       //Assert.assertEquals(ActualMsg,ExpMsg);

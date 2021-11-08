@@ -3,7 +3,7 @@
 <suite guice-stage="DEVELOPMENT" name="Failed suite [Google]">
   <test thread-count="5" name="Test(failed)">
     <parameter name="UserName" value="Abc@gmail.com"/>
-    <parameter name="CorrectPassword" value="abcD@123"/>
+    <parameter name="CorrectPassword" value="Abcde123@"/>
     <parameter name="Password" value="Abcde123@"/>
     <classes>
       <class name="test.LoginTest">
